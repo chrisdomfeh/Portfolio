@@ -113,28 +113,28 @@ a:hover {
 svg path {
     fill: transparent;
     stroke: #fff;
-    stroke-width: 0.5;
-    stroke-dasharray: 210;
-    stroke-dashoffset: 210;
-    animation:textAnimation 4s ease-in-out 1 forwards;
+    stroke-width: 0.2;
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    animation: textAnimation 4s ease-in-out 1 forwards;
 }
 
 .minor-text {
     position: absolute;
     font-family: Righteous;
-    color: rgba(245, 245, 245, 0.29);
+    color: rgba(245, 245, 245, 0.511);
     margin-top: 20px;
     font-size: 15px;
-    bottom: 5%;
+    bottom: -5%;
+    animation: min-text 3s ease-in-out 1 forwards;
+    animation-delay:2s;
 }
 
 
 
 
 @media (max-width: 671px) {
-    .ext {
-        font-size: 100px;
-    }
+
 }
 
 #layer2::after {
@@ -214,12 +214,27 @@ svg path {
 
     }
 }
+
 @keyframes textAnimation {
-    0%{
+    0% {
         stroke-dashoffset: 210;
+
+    }
+
+    40% {
+        fill: transparent;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        fill: white;
+    }
+}
+@keyframes min-text{
+    0%{
+        transform: translateY(50px) 
     }
     100%{
-        stroke-dashoffset: 0;
-        fill:white;
+        transform: translateY(-50px)
     }
 }
