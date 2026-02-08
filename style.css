@@ -56,6 +56,10 @@ a:hover {
     overflow: hidden;
     z-index: 1;
 }
+.text{
+    display:flex;
+    justify-content: center;
+}
 
 #layer1 {
     position: fixed;
@@ -102,14 +106,6 @@ a:hover {
     z-index: 1;
 }
 
-.greeting {
-    position: relative;
-    font-size: 50px;
-    font-family: michroma;
-    color: rgb(255, 0, 221);
-    font-weight: 700;
-}
-
 svg path {
     fill: transparent;
     stroke: #fff;
@@ -128,13 +124,6 @@ svg path {
     bottom: -5%;
     animation: min-text 3s ease-in-out 1 forwards;
     animation-delay:2s;
-}
-
-
-
-
-@media (max-width: 671px) {
-
 }
 
 #layer2::after {
