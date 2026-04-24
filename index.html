@@ -1,51 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHRIS — Portfolio</title>
+    <title>New Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Michroma&family=Righteous&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
     <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+    <script src="script.js" defer></script>
 </head>
 
 <body>
-
-    <!-- THEME TOGGLE -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <span class="toggle-icon">☀</span>
-    </button>
-
-    <!-- CURSOR -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-trail" id="cursorTrail"></div>
-
-    <!-- NAV -->
-    <header id="header">
-        <nav>
-            <a href="#home" data-section="Intro">Intro</a>
-            <a href="#skills" data-section="Skills">Skills</a>
-            <a href="#experience" data-section="Experience">Experience</a>
-            <a href="#projects" data-section="Projects">Projects</a>
-            <a href="#contact" data-section="Contact">Contact</a>
-        </nav>
-        <div class="nav-indicator"></div>
-    </header>
-
-    <!-- ========== SECTION 1: HERO ========== -->
-    <section class="home" id="home">
-        <div class="ambient" id="amb1"></div>
-        <div class="ambient" id="amb2"></div>
-        <div class="ambient" id="amb3"></div>
-
-        <div class="hero-bg-grid"></div>
-
-        <div class="container glass-blur"></div>
-
+    <section class="home">
+        <header>
+            <nav>
+                <a href="#">Intro</a>
+                <a href="#page-2">Skill</a>
+                <a href="#">Experience</a>
+                <a href="#">Projects</a>
+                <a href="#">Contacts</a>
+            </nav>
+        </header>
+        <div id="layer1"></div>
+        <div id="layer2"></div>
+        <div class="container">
+        </div>
         <div class="text">
             <svg class="makeup" width="77%" height="400" viewBox="0 0 174 32" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -54,197 +33,27 @@
                     fill="white" />
             </svg>
             <div class="minor-text">
-                <p>Software Engineer &amp; Creative Developer</p>
-            </div>
-            <div class="scroll-cue">
-                <span>Scroll</span>
-                <div class="scroll-line"></div>
+                <p>Software Engineer</p>
             </div>
         </div>
+
+
     </section>
-
-    <!-- ========== SECTION 2: SKILLS ========== -->
-    <section id="skills">
-        <div class="ambient" id="amb4"></div>
-        <div class="section-label">01 — Skills</div>
-        <div class="section-title reveal">What I<br><em>Build With</em></div>
-
-        <div class="skills-marquee">
-            <div class="marquee-track">
-                <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Python</span>
-                <span>React</span><span>Node.js</span><span>TypeScript</span><span>Git</span>
-                <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Python</span>
-                <span>React</span><span>Node.js</span><span>TypeScript</span><span>Git</span>
-            </div>
-        </div>
-
+    <section id="page-2">
         <div class="container-2">
-            <div class="card card1" data-label="HTML">
-                <div class="card-inner">
-                    <div class="card-glow"></div>
-                    <img src="html.jpg" alt="HTML" loading="lazy">
-                    <div class="card-footer"><span>HTML5</span><small>Structure & Semantics</small></div>
-                </div>
-            </div>
-            <div class="card card2" data-label="CSS">
-                <div class="card-inner">
-                    <div class="card-glow"></div>
-                    <img src="css.jpg" alt="CSS" loading="lazy">
-                    <div class="card-footer"><span>CSS3</span><small>Styling & Animation</small></div>
-                </div>
-            </div>
-            <div class="card card3" data-label="JS">
-                <div class="card-inner">
-                    <div class="card-glow"></div>
-                    <img src="js.jpg" alt="JavaScript" loading="lazy">
-                    <div class="card-footer"><span>JavaScript</span><small>Logic & Interactivity</small></div>
-                </div>
-            </div>
-            <div class="card card4" data-label="PY">
-                <div class="card-inner">
-                    <div class="card-glow"></div>
-                    <img src="python.jpg" alt="Python" loading="lazy">
-                    <div class="card-footer"><span>Python</span><small>Backend & Data</small></div>
-                </div>
-            </div>
-            <div class="card card5" data-label="RE">
-                <div class="card-inner">
-                    <div class="card-glow"></div>
-                    <img src="react.jpg" alt="React" loading="lazy">
-                    <div class="card-footer"><span>React</span><small>UI Frameworks</small></div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ========== SECTION 3: EXPERIENCE ========== -->
-    <section id="experience">
-        <div class="ambient" id="amb5"></div>
-        <div class="section-label">02 — Experience</div>
-        <div class="section-title reveal">Where I've<br><em>Worked</em></div>
+            <div class="card card1"><img height="300px" width="300px" src="html.jpg"></div>
+            <div class="card card2"><img height="300px" width="300px" src="css.jpg"></div>
+            <div class="card card3"><img height="300px" width="300px" src="js.jpg"></div>
+            <div class="card card4"><img height="300px" width="300px" src="python.jpg"></div>
+            <div class="card card5"><img height="300px" width="300px" src="react.jpg"></div>
 
-        <div class="timeline">
-            <div class="timeline-item reveal-left">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="tl-year">2024 — Present</div>
-                    <h3>Senior Frontend Developer</h3>
-                    <p class="tl-company">TechNova Inc.</p>
-                    <p>Built scalable React applications with real-time data sync, reduced load times by 40%, and led a
-                        team of 4 engineers on a flagship SaaS product.</p>
-                    <div class="tl-tags"><span>React</span><span>TypeScript</span><span>Node.js</span></div>
-                </div>
-            </div>
-            <div class="timeline-item reveal-right">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="tl-year">2022 — 2024</div>
-                    <h3>Full Stack Developer</h3>
-                    <p class="tl-company">Axiom Labs</p>
-                    <p>Developed Python microservices and REST APIs consumed by 50k+ users. Built interactive dashboards
-                        with D3.js and WebSocket integrations.</p>
-                    <div class="tl-tags"><span>Python</span><span>FastAPI</span><span>D3.js</span></div>
-                </div>
-            </div>
-            <div class="timeline-item reveal-left">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="tl-year">2020 — 2022</div>
-                    <h3>Junior Web Developer</h3>
-                    <p class="tl-company">Pixel Studio</p>
-                    <p>Crafted pixel-perfect UIs, animated landing pages, and e-commerce experiences for 30+ clients
-                        across Europe and North America.</p>
-                    <div class="tl-tags"><span>HTML/CSS</span><span>JavaScript</span><span>Figma</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== SECTION 4: PROJECTS ========== -->
-    <section id="projects">
-        <div class="ambient" id="amb6"></div>
-        <div class="section-label">03 — Projects</div>
-        <div class="section-title reveal">Selected<br><em>Work</em></div>
-
-        <div class="projects-grid">
-            <div class="project-card reveal-up" data-index="01">
-                <div class="project-img-wrap">
-                    <div class="project-placeholder" style="background: linear-gradient(135deg, #ff00dd44, #0040ff44)">
-                        <span class="proj-num">01</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3>Nebula Dashboard</h3>
-                    <p>Real-time analytics platform with AI-powered insights and 3D data visualizations.</p>
-                    <div class="project-links">
-                        <a href="#" class="proj-link">Live ↗</a>
-                        <a href="#" class="proj-link">Code ↗</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card reveal-up" data-index="02" style="animation-delay:.15s">
-                <div class="project-img-wrap">
-                    <div class="project-placeholder" style="background: linear-gradient(135deg, #00ffaa44, #0040ff44)">
-                        <span class="proj-num">02</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3>Void Commerce</h3>
-                    <p>Headless e-commerce store with custom CMS, real-time inventory, and AR product preview.</p>
-                    <div class="project-links">
-                        <a href="#" class="proj-link">Live ↗</a>
-                        <a href="#" class="proj-link">Code ↗</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card reveal-up" data-index="03" style="animation-delay:.3s">
-                <div class="project-img-wrap">
-                    <div class="project-placeholder" style="background: linear-gradient(135deg, #ff440044, #ff00dd44)">
-                        <span class="proj-num">03</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3>Signal Protocol</h3>
-                    <p>End-to-end encrypted messaging app built with WebSockets, Redis, and React Native.</p>
-                    <div class="project-links">
-                        <a href="#" class="proj-link">Live ↗</a>
-                        <a href="#" class="proj-link">Code ↗</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== SECTION 5: CONTACT ========== -->
-    <section id="contact">
-        <div class="ambient" id="amb7"></div>
-        <div class="section-label">04 — Contact</div>
-
-        <div class="contact-wrap">
-            <div class="contact-big reveal">Let's build<br>something<br><em>remarkable.</em></div>
-            <div class="contact-right">
-                <p class="contact-sub reveal">Open to freelance, full-time roles, and creative collaborations.</p>
-                <a href="mailto:hello@chris.dev" class="cta-btn">
-                    <span>Say Hello</span>
-                    <div class="btn-glow"></div>
-                </a>
-                <div class="socials reveal">
-                    <a href="#">GitHub ↗</a>
-                    <a href="#">LinkedIn ↗</a>
-                    <a href="#">Twitter ↗</a>
-                </div>
-            </div>
         </div>
 
-        <footer>
-            <p>© 2025 Chris — Built with passion &amp; caffeine</p>
-            <p class="footer-right">Scroll back to top ↑</p>
-        </footer>
     </section>
 
-    <script src="script.js" defer></script>
+
+
 </body>
 
 </html>
