@@ -46,12 +46,21 @@ window.addEventListener('DOMContentLoaded', () => {
   const toggleBtn = document.getElementById('themeToggle');
   const toggleIcon = toggleBtn.querySelector('.toggle-icon');
   const html = document.documentElement;
-  let isDark = true;
+
+  // Check saved theme in localStorage
+  const savedTheme = localStorage.getItem('theme');
+  let isDark = savedTheme ? savedTheme !== 'light' : true;
+
+  // Apply saved theme on load
+  html.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  toggleIcon.textContent = isDark ? '☀' : '☾';
 
   toggleBtn.addEventListener('click', () => {
     isDark = !isDark;
     html.setAttribute('data-theme', isDark ? 'dark' : 'light');
     toggleIcon.textContent = isDark ? '☀' : '☾';
+    // Save to localStorage
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
     // pulse effect on ambient
     document.querySelectorAll('.ambient').forEach(a => {
       a.style.transition = 'opacity 0.5s ease';
@@ -61,6 +70,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // ── 4. ACTIVE NAV ON SCROLL ────────────────────────────────
   const sections = document.querySelectorAll('section[id], .home[id]');
   const navLinks = document.querySelectorAll('header nav a');
+  const heroText = document.querySelector('.text');
 
   lenis.on('scroll', ({ scroll }) => {
     // Active link
@@ -74,6 +84,37 @@ window.addEventListener('DOMContentLoaded', () => {
         });
       }
     });
+
+    // Hero zoom-out on scroll
+    if (heroText && scroll > 0) {
+      const homeSection = document.getElementById('home');
+      const maxScroll = homeSection.offsetHeight;
+      const progress = Math.min(scroll / maxScroll, 1);
+      const scale = 1 - (progress * 0.5);
+      const opacity = 1 - progress;
+      heroText.style.transform = `scale(${Math.max(scale, 0.5)})`;
+      heroText.style.opacity = Math.max(opacity, 0);
+    }
+
+    // Skills container-2 shrink and fade on scroll
+    const container2 = document.querySelector('.container-2');
+    if (container2) {
+      const skillsSection = document.getElementById('skills');
+      const sectionTop = skillsSection.offsetTop;
+      const sectionHeight = skillsSection.offsetHeight;
+      const scrollInSection = scroll - sectionTop;
+      const maxScroll = sectionHeight;
+
+      if (scrollInSection > 0 && scrollInSection < maxScroll) {
+        const progress = Math.min(scrollInSection / maxScroll, 1);
+        const distanceFromCenter = Math.abs(progress - 0.5) * 2;
+        // Slight shrink (max 0.85) and partial fade (min 0.5)
+        const scale = 1 - (distanceFromCenter * 0.15);
+        const opacity = 1 - (distanceFromCenter * 0.5);
+        container2.style.transform = `scale(${Math.max(scale, 0.85)})`;
+        container2.style.opacity = Math.max(opacity, 0.5);
+      }
+    }
 
     // Header shrink
     const header = document.getElementById('header');
@@ -156,8 +197,24 @@ window.addEventListener('DOMContentLoaded', () => {
   navLinks.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
-      const target = document.querySelector(link.getAttribute('href'));
+      const href = link.getAttribute('href');
+      const target = document.querySelector(href);
       if (target) lenis.scrollTo(target, { offset: -80, duration: 1.4 });
+
+      // If Intro home is clicked, force-restart the SVG name animation
+      if (href === '#home') {
+        const paths = document.querySelectorAll('svg.makeup path');
+        if (!paths.length) return;
+
+        // Clear inline animation first
+        paths.forEach(p => { p.style.animation = 'none'; });
+
+        // Force reflow then reapply the animation explicitly so it always restarts
+        void document.body.offsetWidth;
+        paths.forEach(p => {
+          p.style.animation = 'textDraw 3.5s ease-in-out forwards';
+        });
+      }
     });
   });
 
@@ -210,6 +267,188 @@ window.addEventListener('DOMContentLoaded', () => {
       ctaBtn.style.setProperty('--my', y + 'px');
     });
   }
+
+  // ── 12. PROJECTS CAROUSEL ───────────────────────────────
+  (function initProjectsCarousel() {
+    const slidesEl = document.querySelectorAll('.pj-slide');
+    const thumbsWrap = document.getElementById('pjThumbnails');
+    const infoInner = document.getElementById('pjInfoInner');
+    const titleEl = document.getElementById('pjTitle');
+    const descEl = document.getElementById('pjDesc');
+    const currentEl = document.getElementById('pjCurrent');
+    const totalEl = document.getElementById('pjTotal');
+    const progressFill = document.getElementById('pjProgressFill');
+    const prevBtn = document.getElementById('pjPrev');
+    const nextBtn = document.getElementById('pjNext');
+
+    if (!slidesEl.length) return;
+
+    const slides = Array.from(slidesEl);
+
+    const AUTO_DELAY = 4000;
+    const ANIM_LOCK = 850;
+
+    const projects = [
+      {
+        title: 'Lay Man Terms',
+        desc: 'An AI-powered tutor that simplifies complex documents — textbooks, lecture notes, research papers — into plain-English explanations. Drop any file and get instant clarity.',
+      },
+      {
+        title: 'Password Generator',
+        desc: 'A fast, minimal password generator built with vanilla JS. Generates cryptographically strong passwords with one click, featuring an instant clipboard copy.',
+      },
+      {
+        title: 'Weather App',
+        desc: 'A clean weather dashboard that fetches live data from OpenWeatherMap. Search any city and see temperature, humidity, cloud coverage, and pressure at a glance.',
+      },
+      {
+        title: 'To-do List',
+        desc: 'A lightweight task manager with smooth check/uncheck animations, real-time task counters, and persistent state — built entirely in vanilla HTML, CSS, and JS.',
+      },
+    ];
+
+    let current = 0;
+    let locked = false;
+    let autoTimer = null;
+    let progressRaf = null;
+    let progressStart = null;
+
+    function pad(n) { return String(n + 1).padStart(2, '0'); }
+
+    totalEl.textContent = String(projects.length).padStart(2, '0');
+    currentEl.textContent = pad(current);
+
+    // Returns live thumb nodes in visual order
+    function getThumbs() {
+      return Array.from(thumbsWrap.querySelectorAll('.pj-thumb'));
+    }
+
+    // Find the thumb whose data-index matches idx
+    function getThumbByIndex(idx) {
+      return thumbsWrap.querySelector(`.pj-thumb[data-index="${idx}"]`);
+    }
+
+    function goTo(nextIdx, direction) {
+      if (locked || nextIdx === current) return;
+      locked = true;
+      stopAuto();
+
+      const prevIdx = current;
+      current = nextIdx;
+
+      // ── Slide transition ──
+      const entering = slides[nextIdx];
+      const exiting = slides[prevIdx];
+
+      if (direction === 'next') {
+        entering.classList.add('active', 'entering-next');
+        exiting.classList.remove('active');
+        exiting.classList.add('exiting-next');
+        entering.addEventListener('animationend', () => entering.classList.remove('entering-next'), { once: true });
+        exiting.addEventListener('animationend', () => exiting.classList.remove('exiting-next'), { once: true });
+      } else {
+        exiting.classList.add('exiting-prev');
+        exiting.classList.remove('active');
+        entering.classList.add('active', 'entering-prev');
+        exiting.addEventListener('animationend', () => {
+          exiting.classList.remove('exiting-prev');
+          exiting.style.opacity = '';
+        }, { once: true });
+        entering.addEventListener('animationend', () => entering.classList.remove('entering-prev'), { once: true });
+      }
+
+      // ── Thumb reorder: viewed thumb moves to last position ──
+      const viewedThumb = getThumbByIndex(prevIdx);
+      const newActiveThumb = getThumbByIndex(nextIdx);
+
+      // 1. Animate the viewed (old active) thumb out to the right
+      if (viewedThumb) {
+        viewedThumb.classList.remove('active');
+        viewedThumb.classList.add('thumb-exit-to-end');
+        viewedThumb.addEventListener('animationend', () => {
+          viewedThumb.classList.remove('thumb-exit-to-end');
+          // Re-append it to the end of the container (DOM reorder)
+          thumbsWrap.appendChild(viewedThumb);
+          // Then animate it entering at the end
+          viewedThumb.classList.add('thumb-enter-end');
+          viewedThumb.addEventListener('animationend', () => {
+            viewedThumb.classList.remove('thumb-enter-end');
+          }, { once: true });
+        }, { once: true });
+      }
+
+      // 2. Activate the new thumb
+      if (newActiveThumb) {
+        newActiveThumb.classList.add('active', 'thumb-activate');
+        newActiveThumb.addEventListener('animationend', () => {
+          newActiveThumb.classList.remove('thumb-activate');
+        }, { once: true });
+      }
+
+      // ── Info text swap ──
+      infoInner.classList.add('animating-out');
+      infoInner.addEventListener('animationend', () => {
+        titleEl.textContent = projects[current].title;
+        descEl.textContent = projects[current].desc;
+        currentEl.textContent = pad(current);
+        infoInner.classList.remove('animating-out');
+        infoInner.classList.add('animating-in');
+        infoInner.addEventListener('animationend', () => infoInner.classList.remove('animating-in'), { once: true });
+      }, { once: true });
+
+      setTimeout(() => { locked = false; startAuto(); }, ANIM_LOCK);
+    }
+
+    // ── Progress bar ──
+    function startProgress() {
+      progressFill.style.transition = 'none';
+      progressFill.style.width = '0%';
+      progressStart = performance.now();
+      function tick(ts) {
+        const pct = Math.min(((ts - progressStart) / AUTO_DELAY) * 100, 100);
+        progressFill.style.width = pct + '%';
+        if (pct < 100) progressRaf = requestAnimationFrame(tick);
+      }
+      progressRaf = requestAnimationFrame(tick);
+    }
+
+    function stopProgress() {
+      if (progressRaf) cancelAnimationFrame(progressRaf);
+      progressFill.style.width = '0%';
+    }
+
+    function startAuto() {
+      stopProgress();
+      startProgress();
+      autoTimer = setTimeout(() => goTo((current + 1) % slides.length, 'next'), AUTO_DELAY);
+    }
+
+    function stopAuto() {
+      clearTimeout(autoTimer);
+      stopProgress();
+    }
+
+    // ── Button listeners ──
+    nextBtn.addEventListener('click', () => goTo((current + 1) % slides.length, 'next'));
+    prevBtn.addEventListener('click', () => goTo((current - 1 + slides.length) % slides.length, 'prev'));
+
+    // Thumb click (use event delegation since order changes)
+    thumbsWrap.addEventListener('click', e => {
+      const thumb = e.target.closest('.pj-thumb');
+      if (!thumb) return;
+      const idx = parseInt(thumb.dataset.index, 10);
+      if (isNaN(idx) || idx === current) return;
+      goTo(idx, idx > current ? 'next' : 'prev');
+    });
+
+    const carousel = document.getElementById('pjCarousel');
+    if (carousel) {
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+    }
+
+    startAuto();
+  })();
 
   console.log('Portfolio JS loaded ✓');
 });
