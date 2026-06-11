@@ -786,7 +786,7 @@ section:nth-child(even) {
     left: 6vw;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 25;
     max-width: 480px;
     width: 42%;
 
@@ -868,6 +868,7 @@ section:nth-child(even) {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+
 }
 
 .pj-btn {
@@ -1093,6 +1094,10 @@ section:nth-child(even) {
     font-size: 11px;
     letter-spacing: 0.2em;
     color: whitesmoke;
+}
+
+[data-theme="light"] .pj-counter {
+    color: rgb(160, 0, 130);
 }
 
 /* ── Section label override ── */

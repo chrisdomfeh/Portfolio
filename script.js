@@ -275,6 +275,9 @@ window.addEventListener('DOMContentLoaded', () => {
     const infoInner = document.getElementById('pjInfoInner');
     const titleEl = document.getElementById('pjTitle');
     const descEl = document.getElementById('pjDesc');
+    const p_link = document.getElementById('p_link');
+    const l_link = document.getElementById('l_link');
+
     const currentEl = document.getElementById('pjCurrent');
     const totalEl = document.getElementById('pjTotal');
     const progressFill = document.getElementById('pjProgressFill');
@@ -292,19 +295,33 @@ window.addEventListener('DOMContentLoaded', () => {
       {
         title: 'Lay Man Terms',
         desc: 'An AI-powered tutor that simplifies complex documents — textbooks, lecture notes, research papers — into plain-English explanations. Drop any file and get instant clarity.',
+        p_link: 'https://github.com/chrisdomfeh/Lay_man_terms',
+        l_link: 'https://chrisdomfeh.github.io/Lay_man_terms/'
       },
       {
         title: 'Password Generator',
         desc: 'A fast, minimal password generator built with vanilla JS. Generates cryptographically strong passwords with one click, featuring an instant clipboard copy.',
+        p_link: '',
+        l_link: ''
       },
       {
         title: 'Weather App',
         desc: 'A clean weather dashboard that fetches live data from OpenWeatherMap. Search any city and see temperature, humidity, cloud coverage, and pressure at a glance.',
+        p_link: 'https://github.com/chrisdomfeh/Weather-app2',
+        l_link: 'https://chrisdomfeh.github.io/Weather-app2/'
       },
       {
         title: 'To-do List',
         desc: 'A lightweight task manager with smooth check/uncheck animations, real-time task counters, and persistent state — built entirely in vanilla HTML, CSS, and JS.',
+        p_link: 'https://github.com/chrisdomfeh/To-do',
+        l_link: 'https://chrisdomfeh.github.io/To-do/'
       },
+      {
+        title: 'Tic Tac Toe',
+        desc: 'A simple Tic Tac Toe game with smooth and visually appealing animations and transitions - built entirely with vanilla HTML, CSS, and JS',
+        p_link: 'https://github.com/chrisdomfeh/Tic-Tac-Toe.',
+        l_link: 'https://chrisdomfeh.github.io/Tic-Tac-Toe./'
+      }
     ];
 
     let current = 0;
@@ -390,6 +407,8 @@ window.addEventListener('DOMContentLoaded', () => {
       infoInner.addEventListener('animationend', () => {
         titleEl.textContent = projects[current].title;
         descEl.textContent = projects[current].desc;
+        p_link.href = projects[current].p_link;
+        l_link.href = projects[current].l_link;
         currentEl.textContent = pad(current);
         infoInner.classList.remove('animating-out');
         infoInner.classList.add('animating-in');
