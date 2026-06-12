@@ -5,7 +5,6 @@
     --accent: rgb(255, 0, 221);
     --accent2: rgb(0, 80, 255);
     --bg: rgb(8, 8, 12);
-    --bg2: rgb(14, 14, 20);
     --surface: rgba(255, 255, 255, 0.04);
     --surface-border: rgba(255, 255, 255, 0.08);
     --text: #f0f0f0;
@@ -23,7 +22,6 @@
 
 [data-theme="light"] {
     --bg: #f2f0f7;
-    --bg2: #e8e5f20a;
     --surface: rgba(0, 0, 0, 0.04);
     --surface-border: rgba(0, 0, 0, 0.09);
     --text: #0d0d14;
@@ -313,7 +311,8 @@ svg.makeup path {
     stroke-width: 0.2;
     stroke-dasharray: 260;
     stroke-dashoffset: 260;
-    animation: textDraw 3.5s ease-in-out forwards;
+    animation: textDraw 7s ease-in-out infinite;
+    animation-delay:4s;
 }
 
 @keyframes textDraw {
@@ -321,10 +320,13 @@ svg.makeup path {
         stroke-dashoffset: 260;
         fill: transparent;
     }
-
-    60% {
+    40%{
         fill: transparent;
+
     }
+    50% {
+        stroke-dashoffset: 0;
+        fill: var(--text);    }
 
     100% {
         stroke-dashoffset: 0;
@@ -392,9 +394,7 @@ section {
     transition: background 0.5s ease;
 }
 
-section:nth-child(even) {
-    background: var(--bg2);
-}
+
 
 .section-label {
     font-family: 'Michroma', monospace;
@@ -476,6 +476,7 @@ section:nth-child(even) {
 
 /* ===== SKILLS MARQUEE ===== */
 
+
 .skills-marquee {
     overflow: hidden;
     padding: 1.5rem 0;
@@ -514,7 +515,29 @@ section:nth-child(even) {
 
 /* ===== SKILLS CARDS ===== */
 #skills {
+
     height: 130vh;
+}
+.banner {
+    height: 100vh;
+    position: relative;
+}
+
+.banner .content .title {
+    font-family: 'Hallowed Grounds';
+    font-size: 6rem;
+}
+
+.banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:linear-gradient(to right,transparent,rgba(140, 17, 240, 0.262));
+    background-size: cover;
+    background-position: center;
+    mask-image: url(inkk.gif);
+    mask-size: cover;
+    mask-position: center;
 }
 
 .container-2 {
@@ -840,7 +863,6 @@ section:nth-child(even) {
     line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--text);
-    text-shadow: 2px 2px 50px rgb(255, 255, 255);
 
 }
 
