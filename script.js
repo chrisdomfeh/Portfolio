@@ -301,8 +301,8 @@ window.addEventListener('DOMContentLoaded', () => {
       {
         title: 'Password Generator',
         desc: 'A fast, minimal password generator built with vanilla JS. Generates cryptographically strong passwords with one click, featuring an instant clipboard copy.',
-        p_link: '',
-        l_link: ''
+        p_link: 'https://github.com/chrisdomfeh/Password-Generator',
+        l_link: 'https://chrisdomfeh.github.io/Password-Generator/'
       },
       {
         title: 'Weather App',
