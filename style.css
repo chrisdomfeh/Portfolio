@@ -475,6 +475,7 @@ section:nth-child(even) {
 }
 
 /* ===== SKILLS MARQUEE ===== */
+
 .skills-marquee {
     overflow: hidden;
     padding: 1.5rem 0;
@@ -513,13 +514,13 @@ section:nth-child(even) {
 
 /* ===== SKILLS CARDS ===== */
 #skills {
-    height: 125vh;
+    height: 130vh;
 }
 
 .container-2 {
 
     width: 100%;
-    height: 130vh;
+    height: 125h;
     text-align: center;
     position: relative;
     transform-origin: center center;
