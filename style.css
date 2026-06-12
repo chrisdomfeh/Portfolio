@@ -402,7 +402,6 @@ section:nth-child(even) {
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--section-label-color);
-    margin-bottom: 1.5rem;
     position: relative;
     z-index: 2;
 }
@@ -413,8 +412,8 @@ section:nth-child(even) {
     font-weight: 700;
     line-height: 1.05;
     color: var(--text);
-    margin-bottom: 5rem;
     position: relative;
+    margin-bottom: 5%;
     z-index: 2;
     letter-spacing: -0.02em;
 }
@@ -512,21 +511,23 @@ section:nth-child(even) {
 }
 
 /* ===== SKILLS CARDS ===== */
+#skills {
+    height: 125vh;
+}
+
 .container-2 {
 
     width: 100%;
-    height: 100vh;
+    height: 125vh;
     text-align: center;
-    overflow: hidden;
     position: relative;
     transform-origin: center center;
 }
 
 .container-2 .slider {
     position: absolute;
-    width: 200px;
-    height: 250px;
-    top: 10%;
+    width: 150px;
+    height: 200px;
     left: calc(50% - 100px);
     transform-style: preserve-3d;
     transform: perspective(1000px);
@@ -549,7 +550,7 @@ section:nth-child(even) {
     position: absolute;
     inset: 0 0 0 0;
     transform:
-        rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(550px);
+        rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(400px);
     box-shadow: 0 0 30px var(--accent);
 }
 
