@@ -2,39 +2,49 @@
 
 /* ===== THEME VARIABLES ===== */
 :root {
-    --accent: rgb(255, 0, 221);
-    --accent2: rgb(0, 80, 255);
-    --bg: rgb(8, 8, 12);
+    --accent: rgb(220, 0, 190);
+    --accent2: rgb(30, 90, 255);
+    --accent-glow: rgba(121, 0, 220, 0.579);
+    --accent2-glow: rgba(30, 90, 255, 0.2);
+    --bg: rgb(7, 7, 11);
     --surface: rgba(255, 255, 255, 0.04);
+    --surface-hover: rgba(255, 255, 255, 0.07);
     --surface-border: rgba(255, 255, 255, 0.08);
-    --text: #f0f0f0;
-    --text-muted: rgba(240, 240, 240, 0.45);
-    --text-faint: rgba(240, 240, 240, 0.18);
-    --card-shadow: rgba(255, 0, 221, 0.35) 0 0 60px, rgba(17, 63, 247, 0.2) 0 0 40px;
-    --nav-bg: rgba(8, 8, 12, 0.6);
-    --timeline-line: rgba(255, 255, 255, 0.1);
-    --tag-bg: rgba(255, 0, 221, 0.12);
-    --tag-color: rgba(255, 150, 240, 0.9);
+    --text: #eeeef2;
+    --text-muted: rgba(238, 238, 242, 0.48);
+    --text-faint: rgba(238, 238, 242, 0.16);
+    --card-shadow: rgba(220, 0, 190, 0.3) 0 0 60px, rgba(30, 90, 255, 0.18) 0 0 40px;
+    --nav-bg: rgba(7, 7, 11, 0.65);
+    --timeline-line: rgba(255, 255, 255, 0.09);
+    --tag-bg: rgba(220, 0, 190, 0.1);
+    --tag-color: rgba(255, 140, 235, 0.95);
     --project-border: rgba(255, 255, 255, 0.07);
     --footer-border: rgba(255, 255, 255, 0.08);
-    --section-label-color: rgba(255, 0, 221, 0.7);
+    --section-label-color: rgba(220, 0, 190, 0.75);
+    --gradient-main: linear-gradient(135deg, var(--accent), var(--accent2));
 }
 
 [data-theme="light"] {
-    --bg: #f2f0f7;
-    --surface: rgba(0, 0, 0, 0.04);
-    --surface-border: rgba(0, 0, 0, 0.09);
-    --text: #0d0d14;
-    --text-muted: rgba(13, 13, 20, 0.5);
-    --text-faint: rgba(13, 13, 20, 0.18);
-    --card-shadow: rgba(255, 0, 221, 0.2) 0 0 60px, rgba(17, 63, 247, 0.15) 0 0 40px;
-    --nav-bg: rgba(242, 240, 247, 0.7);
-    --timeline-line: rgba(0, 0, 0, 0.1);
-    --tag-bg: rgba(255, 0, 221, 0.08);
-    --tag-color: rgb(160, 0, 130);
-    --project-border: rgba(0, 0, 0, 0.08);
-    --footer-border: rgba(0, 0, 0, 0.08);
-    --section-label-color: rgba(200, 0, 170, 0.7);
+    --accent: rgb(190, 0, 160);
+    --accent2: rgb(30, 80, 230);
+    --accent-glow: rgba(190, 0, 160, 0.5);
+    --accent2-glow: rgba(30, 80, 230, 0.35);
+    --bg: #f0eef8;
+    --surface: rgba(0, 0, 0, 0.035);
+    --surface-hover: rgba(0, 0, 0, 0.06);
+    --surface-border: rgba(0, 0, 0, 0.08);
+    --text: #0a0a14;
+    --text-muted: rgba(10, 10, 20, 0.52);
+    --text-faint: rgba(10, 10, 20, 0.17);
+    --card-shadow: rgba(190, 0, 160, 0.18) 0 0 60px, rgba(30, 80, 230, 0.12) 0 0 40px;
+    --nav-bg: rgba(240, 238, 248, 0.75);
+    --timeline-line: rgba(0, 0, 0, 0.09);
+    --tag-bg: rgba(190, 0, 160, 0.07);
+    --tag-color: rgb(150, 0, 120);
+    --project-border: rgba(0, 0, 0, 0.07);
+    --footer-border: rgba(0, 0, 0, 0.07);
+    --section-label-color: rgba(180, 0, 150, 0.72);
+    --gradient-main: linear-gradient(135deg, var(--accent), var(--accent2));
 }
 
 /* ===== RESET ===== */
@@ -125,7 +135,7 @@ body:has(a:hover) .cursor-trail {
 
 .theme-toggle:hover {
     border-color: var(--accent);
-    box-shadow: 0 0 20px rgba(255, 0, 221, 0.3);
+    box-shadow: 0 0 20px var(--accent-glow);
     transform: rotate(20deg);
 }
 
@@ -312,7 +322,7 @@ svg.makeup path {
     stroke-dasharray: 260;
     stroke-dashoffset: 260;
     animation: textDraw 7s ease-in-out infinite;
-    animation-delay:4s;
+    animation-delay: 4s;
 }
 
 @keyframes textDraw {
@@ -320,13 +330,16 @@ svg.makeup path {
         stroke-dashoffset: 260;
         fill: transparent;
     }
-    40%{
+
+    40% {
         fill: transparent;
 
     }
+
     50% {
         stroke-dashoffset: 0;
-        fill: var(--text);    }
+        fill: var(--text);
+    }
 
     100% {
         stroke-dashoffset: 0;
@@ -518,27 +531,6 @@ section {
 
     height: 130vh;
 }
-.banner {
-    height: 100vh;
-    position: relative;
-}
-
-.banner .content .title {
-    font-family: 'Hallowed Grounds';
-    font-size: 6rem;
-}
-
-.banner::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:linear-gradient(to right,transparent,rgba(140, 17, 240, 0.262));
-    background-size: cover;
-    background-position: center;
-    mask-image: url(inkk.gif);
-    mask-size: cover;
-    mask-position: center;
-}
 
 .container-2 {
 
@@ -576,13 +568,14 @@ section {
     inset: 0 0 0 0;
     transform:
         rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(400px);
-    box-shadow: 0 0 30px var(--accent);
+    box-shadow: 0 0 40px var(--accent-glow);
 }
 
 .container-2 .slider .item img {
-    width: 100%;
-    height: 100%;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 /* ===== TIMELINE ===== */
@@ -615,7 +608,7 @@ section {
     height: 11px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 15px var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
 }
 
 .timeline-content {
@@ -628,8 +621,8 @@ section {
 }
 
 .timeline-content:hover {
-    border-color: rgba(255, 0, 221, 0.3);
-    box-shadow: 0 0 40px rgba(255, 0, 221, 0.1);
+    border-color: rgba(220, 0, 190, 0.3);
+    box-shadow: 0 0 40px rgba(220, 0, 190, 0.1);
 }
 
 .tl-year {
@@ -903,7 +896,7 @@ section {
 
 .pj-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 40px rgba(255, 0, 221, 0.4);
+    box-shadow: 0 10px 40px var(--accent-glow);
 }
 
 .pj-btn-ghost {
@@ -986,7 +979,7 @@ section {
 .pj-thumb.active {
     border-color: var(--accent);
     opacity: 1;
-    box-shadow: 0 0 18px rgba(255, 0, 221, 0.45);
+    box-shadow: 0 0 18px var(--accent-glow);
     transform: translateY(-6px) scale(1.07);
 }
 
@@ -1094,7 +1087,7 @@ section {
 .pj-arrow:hover {
     border-color: var(--accent);
     color: var(--accent);
-    box-shadow: 0 0 20px rgba(255, 0, 221, 0.3);
+    box-shadow: 0 0 20px var(--accent-glow);
     transform: translateY(-2px);
 }
 
@@ -1248,7 +1241,7 @@ section {
 
 .cta-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 20px 60px rgba(255, 0, 221, 0.4);
+    box-shadow: 0 20px 60px var(--accent-glow);
 }
 
 .btn-glow {

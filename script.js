@@ -111,7 +111,7 @@ window.addEventListener('DOMContentLoaded', () => {
         // Slight shrink (max 0.85) and partial fade (min 0.5)
         const scale = 1 - (distanceFromCenter * 0.15);
         const opacity = 1 - (distanceFromCenter * 0.5);
-        container2.style.transform = `scale(${Math.max(scale, 0.85)})`;
+        container2.style.transform = `scale(${Math.max(scale, 0.75)})`;
         container2.style.opacity = Math.max(opacity, 0.5);
       }
     }
@@ -171,7 +171,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       const glow = card.querySelector('.card-glow');
       if (glow) {
-        glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,0,221,0.3), transparent 60%)`;
+        glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(220,0,190,0.3), transparent 60%)`;
       }
     });
 
@@ -248,7 +248,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const dot = entry.target.querySelector('.timeline-dot');
         if (dot) {
           dot.style.animation = 'none';
-          dot.style.boxShadow = '0 0 30px rgba(255,0,221,0.9)';
+          dot.style.boxShadow = '0 0 30px rgba(220,0,190,0.9)';
           setTimeout(() => { dot.style.boxShadow = ''; }, 800);
         }
       }
@@ -467,6 +467,45 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     startAuto();
+  })();
+
+  // ── INK SCROLL REVEAL on .banner sections ─────────────────
+  // Ink mask slides UP as you scroll down into section (ink peels off)
+  // Ink mask slides DOWN as you scroll back up (ink re-covers)
+  (function initInkReveal() {
+    const banners = document.querySelectorAll('.banner');
+    banners.forEach(banner => {
+      const mask = document.createElement('div');
+      mask.classList.add('ink-mask');
+      banner.insertBefore(mask, banner.firstChild);
+    });
+
+    function updateInk({ scroll }) {
+      const viewH = window.innerHeight;
+      banners.forEach(banner => {
+        const mask = banner.querySelector('.ink-mask');
+        if (!mask) return;
+
+        const sectionTop = banner.offsetTop;
+        const sectionH = banner.offsetHeight;
+
+        // progress 0 → section top just hit the bottom of viewport (starting to enter)
+        // progress 1 → section top reached the top of viewport (fully in view)
+        const rawProgress = (scroll - (sectionTop - viewH)) / viewH;
+        const progress = Math.max(0, Math.min(1, rawProgress));
+
+        // translateY: 0% = covering section (ink on screen)
+        //            -120% = fully slid up off screen (ink peeled off)
+        const translateY = -(progress * 120);
+        mask.style.transform = `translateY(${translateY}%)`;
+
+        // slight fade as it leaves, so it doesn't hard-clip
+        mask.style.opacity = Math.max(0, 1 - progress * 1.3).toString();
+      });
+    }
+
+    lenis.on('scroll', updateInk);
+    updateInk({ scroll: window.scrollY || 0 });
   })();
 
   console.log('Portfolio JS loaded ✓');
