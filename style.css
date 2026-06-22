@@ -319,10 +319,10 @@ svg.makeup path {
     fill: transparent;
     stroke: var(--text);
     stroke-width: 0.2;
-    stroke-dasharray: 260;
+    stroke-dasharray: 259;
     stroke-dashoffset: 260;
-    animation: textDraw 7s ease-in-out infinite;
-    animation-delay: 4s;
+    animation: textDraw 7s ease-in-out forwards;
+    animation-delay: 2s;
 }
 
 @keyframes textDraw {
@@ -926,8 +926,8 @@ section {
 }
 
 .pj-thumb {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
